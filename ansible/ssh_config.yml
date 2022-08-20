@@ -1,0 +1,9 @@
+- name: make sure ssh is working
+  hosts: localhost
+  tasks:
+  - name: starting and enabeling sshd 
+    service:
+      name: ssh
+      state: started
+      enabled: yes
+ 

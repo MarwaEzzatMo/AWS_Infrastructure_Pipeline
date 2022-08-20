@@ -1,0 +1,34 @@
+- name: configuring EC2 instance to be a Jenkins Slave
+  hosts: slave
+  tasks:
+  - name: updating 
+    yum:
+      update_cache: yes
+  - name: installing Docker and Java
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ install }}"
+  - name: starting and enabeling docker
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  - name: adding user ec2-user to docker group
+    user:
+      name: ec2-user
+      groups: docker
+      append: yes
+  - name: making directory as home for Jenkins
+    file:
+      path: "{{ item }}"
+      state: directory
+      mode: 0777
+    loop:
+    - /home/ec2-user/jenkins_home
+    - /home/ec2-user/bin
+  - name: copying the agent.jar to the slave
+    copy:
+      src: /var/jenkins_home/workspace/infrastructre_pipeline/ansible/files/agent.jar
+      dest: /home/ec2-user/bin/agent.jar
+

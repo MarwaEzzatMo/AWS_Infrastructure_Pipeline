@@ -1,0 +1,10 @@
+.terraform*
+provisioner.txt
+.ssh.txt
+us-east-1-dev-public-key_pair.pem
+eu-central-1-dev-public-key_pair.pem
+.mysql.txt
+.redis.txt
+lambda.txt
+.diagram
+.ssh_jump.txt

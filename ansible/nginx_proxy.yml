@@ -1,0 +1,19 @@
+- name: configure bastion to be a proxy server
+  hosts: bastion-grp
+  tasks:
+  - name: installing nginx
+    command: "amazon-linux-extras install nginx1 -y"
+  - name: starting and enabling nginx
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+  - name: editing config to proxy to private instance
+    copy:
+      src: ./files/nginx.conf
+      dest: /etc/nginx/nginx.conf
+  - name: restarting nginx
+    service:
+      name: nginx
+      state: restarted
+
